@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume ATS Analyzer</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .card {
+            width: 420px;              /* reduced width */
+            padding: 25px;             /* reduced padding */
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: 0.4s;
+            margin-top: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        form p {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 13px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-size: 14px;
+            animation: fadeIn 0.6s ease-in-out;
+            word-wrap: break-word;
+        }
+
+        .score {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 5px;
+            color: #00ffcc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0px); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🚀 AI Resume ATS Analyzer</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Analyze Resume</button>
+    </form>
+
+    {% if skills %}
+    <div class="result-box">
+        <strong>🔍 Detected Skills:</strong>
+        <p>{{ skills }}</p>
+    </div>
+    {% endif %}
+
+    {% if score is not None %}
+    <div class="result-box">
+        <strong>📊 ATS Score:</strong>
+        <div class="score">{{ score }}%</div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
